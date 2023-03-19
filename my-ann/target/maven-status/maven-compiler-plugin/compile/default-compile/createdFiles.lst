@@ -1,0 +1,5 @@
+com/example/demo/ann/ToStringImplementerProcessor.class
+com/example/demo/ann/AllFieldsNullCheckerProcessor.class
+META-INF/services/javax.annotation.processing.Processor
+com/example/demo/ann/AllFieldsNullChecker.class
+com/example/demo/ann/ToStringImplementer.class
