@@ -7,6 +7,18 @@ public class Debtor {
     private int age;
     private List<String> checkOuts;
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setCheckOuts(List<String> checkOuts) {
+        this.checkOuts = checkOuts;
+    }
+
     public String getName() {
         return name;
     }

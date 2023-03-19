@@ -6,6 +6,7 @@ import org.springframework.javapoet.JavaFile;
 import org.springframework.javapoet.MethodSpec;
 import org.springframework.javapoet.TypeName;
 import org.springframework.javapoet.TypeSpec;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.Processor;
@@ -15,47 +16,20 @@ import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.AnnotationValue;
 import javax.lang.model.element.Element;
-import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.TypeMirror;
-import javax.lang.model.util.ElementFilter;
-import javax.lang.model.util.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @AutoService(Processor.class)
 @SupportedAnnotationTypes("com.example.demo.ann.AllFieldsNullChecker")
 @SupportedSourceVersion(SourceVersion.RELEASE_17)
 public class AllFieldsNullCheckerProcessor extends AbstractProcessor {
-
-//    private List<String> getFieldNames(TypeElement classElement) {
-//        Elements elements = processingEnv.getElementUtils();
-//        List<VariableElement> fields = ElementFilter.fieldsIn(elements.getAllMembers(classElement));
-//        return fields.stream()
-//                .filter(f -> f.getKind() == ElementKind.FIELD)
-//                .map(Element::getSimpleName)
-//                .map(Object::toString)
-//                .collect(Collectors.toList());
-//    }
-
-//    public List<String> getGetterMethods(TypeElement typeElement) {
-//        List<String> result = new ArrayList<>();
-//        for (Element enclosedElement : typeElement.getEnclosedElements()) {
-//            if (enclosedElement instanceof ExecutableElement executableElement) {
-//                String methodName = executableElement.getSimpleName().toString();
-//                if (methodName.startsWith("get") && executableElement.getParameters().isEmpty()) {
-//                    result.add(methodName);
-//                }
-//            }
-//        }
-//        return result;
-//    }
 
     public List<String> getFieldNameList(TypeElement classElement) {
         List<String> fieldNames = new ArrayList<>();
@@ -93,7 +67,7 @@ public class AllFieldsNullCheckerProcessor extends AbstractProcessor {
 
                 List<String> fieldNames = getFieldNameList(source);
                 StringBuilder generatedMethodBody = new StringBuilder("return ");
-                if(fieldNames.size() == 0)
+                if (fieldNames.size() == 0)
                     generatedMethodBody.append("true");
                 else {
                     for (String fieldName : fieldNames) {
@@ -120,6 +94,7 @@ public class AllFieldsNullCheckerProcessor extends AbstractProcessor {
             }
 
             TypeSpec generatedClass = TypeSpec.classBuilder(className + "Impl")
+                    .addAnnotation(Service.class)
                     .addSuperinterface(TypeName.get(classElement.asType()))
                     .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                     .addMethods(methodList)
