@@ -1,7 +1,0 @@
-com/example/demo/DemoApplication.class
-com/example/demo/validation/MyService.class
-com/example/demo/validation/MyFieldChecker.class
-com/example/demo/dto/Debtor.class
-com/example/generated/MyFieldCheckerImpl.class
-com/example/demo/dto/Student.class
-com/example/generated/MyServiceImpl.class
